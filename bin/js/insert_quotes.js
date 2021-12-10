@@ -25,17 +25,17 @@ const path = require("path");
  * -----------------------------------------------------------------------------
  * Obtienes el archivo JSON y lo convierte en un array.
  *
- * @param {string} jsonFile Archivo JSON con las citas.
- * @returns {Object} Array con las citas.
+ * @param {string} jsonFile Archivo JSON con las frases.
+ * @returns {Object} Array con las frases.
  */
 function getJsonFile() {
-    const jsonFile = path.join(__dirname, "../../src/quotes.json");
+    const jsonFile = path.join(__dirname, "../../quotes.json");
     return JSON.parse(fs.readFileSync(jsonFile, "utf8"));
 }
 /**
- * Insertar Citas en Base de Datos
+ * Insertar Frases en Base de Datos
  * -----------------------------------------------------------------------------
- * @param {Object} quotes Array con las citas.
+ * @param {Object} quotes Array con las frases.
  */
 function insertQuotesInDb(quotes) {
     const connection = mysql2.createConnection({
@@ -54,13 +54,13 @@ function insertQuotesInDb(quotes) {
             if (quote.author == "") quote.author = "Desconocido";
             connection.query(
                 "INSERT INTO ronaldrbb_rqm_quotes (id,quote, author) VALUES (?, ?, ?)",
-                [null, quote.quote, quote.author],
+                [null, quote.text, quote.author],
                 function (err, result) {
                     if (err) {
                         console.error(err);
                         return;
                     }
-                    console.log("Cita insertada: " + quote.quote);
+                    console.log("Frase insertada: " + quote.text);
                 }
             );
         });

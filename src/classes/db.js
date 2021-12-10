@@ -1,27 +1,22 @@
 /**
  * =============================================================================
- * Controllers | Index
+ * Src | Classes | Db
  * =============================================================================
  */
 /**
  * Modules
  * -----------------------------------------------------------------------------
  */
-const Quote = require("../src/classes/quote");
+const config = require("../../config/config");
+const mysql = require("mysql2");
 /**
- * Controllers
+ * Globals
  * -----------------------------------------------------------------------------
  */
+const pool = mysql.createPool(config.mysql);
+const promisePool = pool.promise();
 /**
- * Index - Get method
+ * Exports
  * -----------------------------------------------------------------------------
- * Envía la frase y el autor en formato JSON.
- *
- * @param {object} req Request.
- * @param {object} res Response.
  */
-module.exports.indexGet = async (req, res) => {
-    var quote = new Quote();
-    await quote.getRandomly();
-    res.json(quote);
-};
+module.exports = promisePool;
