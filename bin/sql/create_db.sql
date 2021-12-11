@@ -1,6 +1,6 @@
 -- -----------------------------------------------------------------------------
 --
--- Estructura de tabla para la tabla `ronaldrbb_rqm_quotes`
+-- Table structure for table `ronaldrbb_rqm_quotes`
 --
 DROP TABLE IF EXISTS `ronaldrbb_rqm_quotes`;
 CREATE TABLE `ronaldrbb_rqm_quotes` (

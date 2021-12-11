@@ -4,38 +4,37 @@
  * =============================================================================
  */
 /**
- * Ambiente
+ * Environment
  * -----------------------------------------------------------------------------
  */
 const dotenv = require("dotenv");
 dotenv.config();
 /**
- * Módulos
+ * Modules
  * -----------------------------------------------------------------------------
  */
 const mysql2 = require("mysql2");
 const fs = require("fs");
 const path = require("path");
 /**
- * Funciones
+ * Functions
  * -----------------------------------------------------------------------------
  */
 /**
- * Obtener Archivo JSON
+ * Get Json File
  * -----------------------------------------------------------------------------
- * Obtienes el archivo JSON y lo convierte en un array.
+ * Get the quotes from the json file.
  *
- * @param {string} jsonFile Archivo JSON con las frases.
- * @returns {Object} Array con las frases.
+ * @returns {Object} Array with the quotes.
  */
 function getJsonFile() {
     const jsonFile = path.join(__dirname, "../../quotes.json");
     return JSON.parse(fs.readFileSync(jsonFile, "utf8"));
 }
 /**
- * Insertar Frases en Base de Datos
+ * Insert Quotes in Database
  * -----------------------------------------------------------------------------
- * @param {Object} quotes Array con las frases.
+ * @param {Object} quotes Array with the quotes.
  */
 function insertQuotesInDb(quotes) {
     const connection = mysql2.createConnection({
@@ -49,9 +48,9 @@ function insertQuotesInDb(quotes) {
             console.error(err);
             return;
         }
-        console.log("Conectado a la base de datos");
+        console.log("Connected to database");
         quotes.forEach((quote) => {
-            if (quote.author == "") quote.author = "Desconocido";
+            if (quote.author == "") quote.author = "Unknown";
             connection.query(
                 "INSERT INTO ronaldrbb_rqm_quotes (id,quote, author) VALUES (?, ?, ?)",
                 [null, quote.text, quote.author],
@@ -60,14 +59,14 @@ function insertQuotesInDb(quotes) {
                         console.error(err);
                         return;
                     }
-                    console.log("Frase insertada: " + quote.text);
+                    console.log("Inserted quote: " + quote.text);
                 }
             );
         });
     });
 }
 /**
- * Inicio
+ * Main
  * -----------------------------------------------------------------------------
  */
 function main() {

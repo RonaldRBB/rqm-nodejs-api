@@ -1,26 +1,28 @@
 /**
  * =============================================================================
- * Routes | Index
+ * Controllers | Index
  * =============================================================================
  */
 /**
  * Modules
  * -----------------------------------------------------------------------------
  */
-const express = require("express");
-const controller = require("../controllers/index");
+const Quote = require("../src/classes/quote");
 /**
- * Globals
+ * Controllers
  * -----------------------------------------------------------------------------
  */
-const router = express.Router();
 /**
- * Routes
+ * Index - Get method
  * -----------------------------------------------------------------------------
+ * Send a random quote to the client.
+ *
+ * @param {object} req Request.
+ * @param {object} res Response.
  */
-router.get("/", controller.indexGet);
-/**
- * Exports
- * -----------------------------------------------------------------------------
- */
-module.exports = router;
+module.exports.indexGet = async (req, res) => {
+    var quote = new Quote();
+    await quote.getRandomly();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(quote);
+};

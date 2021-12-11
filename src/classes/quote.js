@@ -11,7 +11,7 @@ const db = require("../classes/db");
 /**
  * Quote
  * -----------------------------------------------------------------------------
- * Clase para manejar las citas.
+ * Class to handle quotes.
  */
 class Quote {
     id = null;
@@ -19,21 +19,21 @@ class Quote {
     text = null;
     #table = "ronaldrbb_rqm_quotes";
     /**
-     * Obtener Cita por ID
+     * Get Quote by ID
      * -------------------------------------------------------------------------
      *
-     * @param {number} id ID de la cita.
-     * @returns {Promise<object>} Cita.
+     * @param {number} id Quote ID.
+     * @returns {Promise<object>} Quote.
      */
     async getById(id) {
         const quote = await this.#getByIdFromDb(id);
         if (quote) this.#updateCLass(quote);
     }
     /**
-     * Obtener Cita Aleatoriamente
+     * Get Quote Randomly
      * -------------------------------------------------------------------------
      *
-     * @returns {Promise<object>} Cita.
+     * @returns {Promise<object>} Quote.
      */
     async getRandomly() {
         const totalQuotes = await this.#getTotal();
@@ -46,11 +46,11 @@ class Quote {
         if (quote) this.#updateCLass(quote);
     }
     /**
-     * Actualizar Clase
+     * Update Quote
      * -------------------------------------------------------------------------
-     * Actualiza la clase con los datos de la cita.
+     * Update class properties with the quote data.
      *
-     * @param {object} quote Cita.
+     * @param {object} quote Quote.
      * @returns {void}
      */
     #updateCLass(quote) {
@@ -59,10 +59,10 @@ class Quote {
         this.text = quote.text;
     }
     /**
-     * Obtener Total de Citas
+     * Get Total Quotes
      * -------------------------------------------------------------------------
      *
-     * @returns {Promise<number>} Total de citas.
+     * @returns {Promise<number>} Total Quotes.
      */
     async #getTotal() {
         const query = `SELECT COUNT(*) AS total FROM ${this.#table}`;
@@ -70,11 +70,11 @@ class Quote {
         return rows[0].total;
     }
     /**
-     * Obtener Cita por ID de la Base de Datos
+     * Get Quote by ID from DB
      * -------------------------------------------------------------------------
      *
-     * @param {number} id ID de la cita.
-     * @returns {Promise<object>} Cita.
+     * @param {number} id Quote ID.
+     * @returns {Promise<object>} Quote.
      */
     async #getByIdFromDb(id) {
         const query = `SELECT id, quote AS text, author FROM ${

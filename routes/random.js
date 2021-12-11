@@ -1,27 +1,26 @@
 /**
  * =============================================================================
- * Controllers | Index
+ * Routes | Index
  * =============================================================================
  */
 /**
  * Modules
  * -----------------------------------------------------------------------------
  */
-const Quote = require("../src/classes/quote");
+const express = require("express");
+const controller = require("../controllers/random");
 /**
- * Controllers
+ * Globals
  * -----------------------------------------------------------------------------
  */
+const router = express.Router();
 /**
- * Index - Get method
+ * Routes
  * -----------------------------------------------------------------------------
- * Envía la frase y el autor en formato JSON.
- *
- * @param {object} req Request.
- * @param {object} res Response.
  */
-module.exports.indexGet = async (req, res) => {
-    var quote = new Quote();
-    await quote.getRandomly();
-    res.json(quote);
-};
+router.get("/", controller.indexGet);
+/**
+ * Exports
+ * -----------------------------------------------------------------------------
+ */
+module.exports = router;
