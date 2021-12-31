@@ -13,7 +13,6 @@ dotenv.config();
  * Modules
  * -----------------------------------------------------------------------------
  */
-const config = require("./config/config");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");

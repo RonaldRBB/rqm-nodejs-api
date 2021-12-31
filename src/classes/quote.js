@@ -17,7 +17,8 @@ class Quote {
     id = null;
     author = null;
     text = null;
-    #table = "ronaldrbb_rqm_quotes";
+    category = null;
+    #table = "rqm_quotes_view";
     /**
      * Get Quote by ID
      * -------------------------------------------------------------------------
@@ -27,7 +28,7 @@ class Quote {
      */
     async getById(id) {
         const quote = await this.#getByIdFromDb(id);
-        if (quote) this.#updateCLass(quote);
+        if (quote) this.#updateClass(quote);
     }
     /**
      * Get Quote Randomly
@@ -36,14 +37,10 @@ class Quote {
      * @returns {Promise<object>} Quote.
      */
     async getRandomly() {
-        const totalQuotes = await this.#getTotal();
-        var randomId = 0;
-        var quote = undefined;
-        while (quote === undefined) {
-            randomId = Math.floor(Math.random() * totalQuotes);
-            quote = await this.#getByIdFromDb(randomId);
-        }
-        if (quote) this.#updateCLass(quote);
+        const totalQuotes = await this.#getTotalFromDb();
+        const randomId = Math.floor(Math.random() * totalQuotes);
+        const quote = await this.#getByIdFromDb(randomId);
+        if (quote) this.#updateClass(quote);
     }
     /**
      * Update Quote
@@ -53,21 +50,11 @@ class Quote {
      * @param {object} quote Quote.
      * @returns {void}
      */
-    #updateCLass(quote) {
+    #updateClass(quote) {
         this.id = quote.id;
+        this.text = quote.quote;
         this.author = quote.author;
-        this.text = quote.text;
-    }
-    /**
-     * Get Total Quotes
-     * -------------------------------------------------------------------------
-     *
-     * @returns {Promise<number>} Total Quotes.
-     */
-    async #getTotal() {
-        const query = `SELECT COUNT(*) AS total FROM ${this.#table}`;
-        const [rows, fields] = await db.execute(query);
-        return rows[0].total;
+        this.category = quote.category;
     }
     /**
      * Get Quote by ID from DB
@@ -77,11 +64,20 @@ class Quote {
      * @returns {Promise<object>} Quote.
      */
     async #getByIdFromDb(id) {
-        const query = `SELECT id, quote AS text, author FROM ${
-            this.#table
-        } WHERE id = ${id}`;
+        const query = `SELECT * FROM ${this.#table} WHERE id = ${id}`;
         const [rows, fields] = await db.execute(query);
         return rows[0];
+    }
+    /**
+     * Get Total Quotes
+     * -------------------------------------------------------------------------
+     *
+     * @returns {Promise<number>} Total Quotes.
+     */
+    async #getTotalFromDb() {
+        const query = `SELECT COUNT(*) AS total FROM ${this.#table}`;
+        const [rows, fields] = await db.execute(query);
+        return rows[0].total;
     }
 }
 /**

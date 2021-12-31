@@ -1,2 +1,3 @@
-# rqm-nodejs-back-end
-Random Quote Machine Nodejs Back-End
+# rqm-nodejs-api
+
+Random Quote Machine Nodejs Api

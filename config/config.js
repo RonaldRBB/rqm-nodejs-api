@@ -9,8 +9,8 @@
  */
 const config = {
     server: {
-        name: "SA - CLR - R2B2DEV",
-        port: process.env.APP_PORT,
+        name: "RQM - NODEJS - API",
+        port: process.env.API_PORT,
         logType: process.env.LOG_TYPE,
         url: process.env.SERVER_URL,
     },
